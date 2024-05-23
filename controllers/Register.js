@@ -5,6 +5,8 @@ import jwt from 'jsonwebtoken';
 import User from "../models/userLogin.js";
 import Agent from "../models/Agent.js";
 import multer from 'multer';
+import fs from 'fs'
+import path from "path";
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
