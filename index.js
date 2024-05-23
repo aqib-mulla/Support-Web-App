@@ -11,7 +11,7 @@ import { fileURLToPath } from 'url';
 import { Login } from './controllers/login.js';
 import { AdminLogin, createAccount, getTickets, getAllTickets, updateStatus, createAgent , getAgents} from './controllers/Register.js';
 import { createTicket } from './controllers/Register.js';
-import { updateAgent, AgentLogin, getAgentTickets, sendFile } from './controllers/Register.js';
+import { updateAgent, AgentLogin, getAgentTickets, sendFile, downloadFile } from './controllers/Register.js';
 
 // CONFIGURATIONS
 const __filename = fileURLToPath(import.meta.url);
@@ -70,9 +70,11 @@ app.get("/auth/tech-support-agents", getAgents);
 //get agent particular tickets
 app.get("/auth/agent-tickets/:user", getAgentTickets);
 
+//upload file
 app.post("/auth/upload-file/:ticketId", upload.single('file'), sendFile);
 
-
+//download file
+app.get('/auth/download-file/:ticketId', downloadFile);
 
 //Admin Login
 app.post("/auth/admin-login", AdminLogin);
