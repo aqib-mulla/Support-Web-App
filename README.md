@@ -15,7 +15,7 @@ Link : https://support-web-app.onrender.com/admin
 username : admin 
 password : admin
 
-Tech Support Login Details (Open in the private window)
+Tech Support Login Details
 Link : https://support-web-app.onrender.com/agent
 username : aqib 
 password : aqib
