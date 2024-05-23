@@ -17,3 +17,6 @@ Tech Support Login Details
 Link : https://support-web-app.onrender.com/agent
 username : aqib 
 password : aqib
+
+
+Files are getting uploaded to the uploads folder.
