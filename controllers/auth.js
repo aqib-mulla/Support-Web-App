@@ -3,38 +3,25 @@ import Bill from "../models/Bill.js";
 import BillDetail from "../models/BillDetails.js";
 import shortid from 'shortid';
 
-// REGISTER PATIENT
 
-// export const register = async (req, res) =>{
-//    try{
-//     const { userRegistration, selectedTests } = req.body;
-//     const {pId,pSalutation,pName, pAge, pGender,pNum, pEmail,doctorName} = userRegistration;
-//     const user = new PatientReg({pId, pSalutation,pName, pAge, pGender,pNum, pEmail, doctorName});
-//     const userSaved = user.save();
-//     res.status(201).json(userSaved);
-
-//    }catch(err){
-//     res.status(500).json({error : err.message});
-//    } 
-// }
 
 export const register = async (req, res) => {
     try {
         const { userRegistration, selectedTests } = req.body;
 
-        // Destructure userRegistration object
+       
         const { pId, pSalutation, pName, pAge, pGender, pNum, pEmail, doctorName } = userRegistration;
 
         // Create and save PatientReg instance
         const user = new PatientReg({ pId, pSalutation, pName, pAge, pGender, pNum, pEmail, doctorName });
         const userSaved = await user.save();
 
-        // Find the highest billId in the collection
+       
         const highestBill = await Bill.findOne().sort({ billId: -1 }).exec();
         const nextBillId = highestBill ? highestBill.billId + 1 : '1';
 
 
-        // Create a new Bill instance and save it to the database
+       
         const bill = new Bill({
             pId,
             refId: userSaved._id,
@@ -49,7 +36,7 @@ export const register = async (req, res) => {
         // await bill.save();
         const billSaved = await bill.save();
 
-        // Iterate through the selectedTests array and store the data for each test in BillDetail
+        
         const billDetailPromises = selectedTests.map(async test => {
             const { _id, type, fees, profilePrice, groupPrice /* ... */ } = test;
 
@@ -59,15 +46,14 @@ export const register = async (req, res) => {
                 testId: _id,
                 type,
                 fees: fees || profilePrice || groupPrice,
-                // ... other properties
             });
             return await billDetail.save();
         });
 
-        // Wait for all billDetail promises to resolve
+        
         await Promise.all(billDetailPromises);
 
-        // Respond with saved data
+    
         res.status(201).json({ user: userSaved, billId: billSaved._id  });
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -78,16 +64,16 @@ export const createBill = async (req, res) => {
     try {
         const { userRegistration, selectedTests } = req.body;
 
-        // Destructure userRegistration object
+        
         const { pId, pSalutation, pName, pAge, pGender, pNum, pEmail, doctorName } = userRegistration;
 
-        // Check if a patient with the same pId already exists
+        
         const existingPatient = await PatientReg.findOne({ _id : pId });
 
         let userSaved;
 
         if (existingPatient) {
-            // If patient exists, use the existing patient record
+            
             userSaved = existingPatient;
         } else {
             // If patient doesn't exist, create and save a new PatientReg instance
@@ -95,11 +81,11 @@ export const createBill = async (req, res) => {
             userSaved = await newUser.save();
         }
 
-        // Find the highest billId in the collection
+        
         const highestBill = await Bill.findOne().sort({ billId: -1 }).exec();
         const nextBillId = highestBill ? highestBill.billId + 1 : '1';
 
-        // Create a new Bill instance and save it to the database
+        
         const bill = new Bill({
             refId: userSaved._id,
             doctorName,
@@ -124,15 +110,15 @@ export const createBill = async (req, res) => {
                 department,
                 type,
                 fees: fees || profilePrice || groupPrice || opFees,
-                // ... other properties
+               
             });
             return await billDetail.save();
         });
 
-        // Wait for all billDetail promises to resolve
+       
         await Promise.all(billDetailPromises);
 
-        // Respond with saved data
+       
         res.status(201).json({ user: userSaved, billId: billSaved._id  });
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -187,9 +173,9 @@ export const getPatientById = async (req, res) => {
     res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
 
     try {
-        const pId = req.params.id; // Get the patient id from the route parameter
-        const patient = await PatientReg.findById(pId); // Use findById to fetch a patient by id
-        // console.log('Fetched patient:', patient);
+        const pId = req.params.id; 
+        const patient = await PatientReg.findById(pId); 
+        
 
         if (!patient) {
             return res.status(404).json({ error: 'patient not found' });
