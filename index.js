@@ -26,7 +26,9 @@ app.use(bodyParser.json({limit: "30mb", extended: true}));
 app.use(bodyParser.urlencoded({limit: "30mb", extended: true}));
 // Allow requests from the frontend origin (http://localhost:3000)
 app.use(cors({ origin: 'http://localhost:3000' }));
-app.use("/assets", express.static(path.join(__dirname, 'public/assets')));
+// app.use("/assets", express.static(path.join(__dirname, 'public/assets')));
+app.use(express.static(path.join(__dirname, './build')));
+
 
 
 //FILE  STORAGE CONFIG
@@ -79,7 +81,9 @@ app.post("/auth/admin-login", AdminLogin);
 app.post("/auth/agent-login", AgentLogin);
 
 
-
+app.get('*', function(req, res) {
+    res.sendFile(path.join(__dirname,'./build/index.html'))
+})
 
 
 // MONGOOSE SETUP
