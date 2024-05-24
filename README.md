@@ -20,3 +20,6 @@ password : aqib
 
 
 Files are getting uploaded to the uploads folder.
+
+Environment File change it to 
+REACT_APP_API_KEY=http://localhost:3001
