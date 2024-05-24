@@ -25,7 +25,7 @@ Files are getting uploaded to the uploads folder.
 change it to REACT_APP_API_KEY to http://localhost:3001 in env file in front end react
 
 2)Starting Your React App: 
-To run your React app, you just need to type npm start in your React project's main folder. This command gets everything up and running for you : (npm start)
+To run your React app, you just need to type npm start in your React project's main folder. This command gets everything up and running for you : npm start
 
 3)Starting Your Backend Server:
 For your backend server, if you're using nodemon and your server's main file is named index.js, you can start it with: nodemon index.js
